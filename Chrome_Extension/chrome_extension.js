@@ -1,31 +1,31 @@
-let myLeads = []
+let myResouces = []
 const inputEl = document.getElementById("input-el")
 const inputBtn = document.getElementById("input-btn")
 const ulEl = document.getElementById("ul-el")
 const deleteBtn = document.getElementById("delete-btn")
-const leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"))
+const resoucesFromLocalStorage = JSON.parse(localStorage.getItem("myResouces"))
 const tabBtn = document.getElementById("tab-btn")
 
-if (leadsFromLocalStorage) {
-    myLeads = leadsFromLocalStorage
-    render(myLeads)
+if (resoucesFromLocalStorage) {
+    myResouces = resoucesFromLocalStorage
+    render(myResouces)
 }
 
 tabBtn.addEventListener("click", function () {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        myLeads.push(tabs[0].url)
-        localStorage.setItem("myLeads", JSON.stringify(myLeads))
-        render(myLeads)
+        myResouces.push(tabs[0].url)
+        localStorage.setItem("myResouces", JSON.stringify(myResouces))
+        render(myResouces)
     })
 })
 
-function render(leads) {
+function render(resouces) {
     let listItems = ""
-    for (let i = 0; i < leads.length; i++) {
+    for (let i = 0; i < resouces.length; i++) {
         listItems += `
             <li>
-                <a target='_blank' href='${leads[i]}'>
-                    ${leads[i]}
+                <a target='_blank' href='${resouces[i]}'>
+                    ${resouces[i]}
                 </a>
             </li>
         `
@@ -35,13 +35,13 @@ function render(leads) {
 
 deleteBtn.addEventListener("dblclick", function () {
     localStorage.clear()
-    myLeads = []
-    render(myLeads)
+    myResouces = []
+    render(myResouces)
 })
 
 inputBtn.addEventListener("click", function () {
-    myLeads.push(inputEl.value)
+    myResouces.push(inputEl.value)
     inputEl.value = ""
-    localStorage.setItem("myLeads", JSON.stringify(myLeads))
-    render(myLeads)
+    localStorage.setItem("myResouces", JSON.stringify(myResouces))
+    render(myResouces)
 })
